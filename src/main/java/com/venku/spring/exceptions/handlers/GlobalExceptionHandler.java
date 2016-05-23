@@ -16,17 +16,11 @@ import javax.servlet.http.HttpServletResponse;
  * Created by venkatesha.chandru on 5/23/2016.
  */
 @ControllerAdvice
-public class UnprocessableExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY, reason="userId should not be part of request body[JSON]")
     public ResponseEntity<Object> handleUnprocessableException(HttpServletRequest req, HttpServletResponse res, Exception e) {
-        System.out.println("Handler - " + e.getMessage());
-        UnprocessableException ue = new UnprocessableException("");
-        if(e instanceof UnprocessableException) {
-            ue = (UnprocessableException) e;
-        }
-
-        return ResponseEntity.unprocessableEntity().body(ue.getExceptionMessage());
+        return ResponseEntity.unprocessableEntity().body("");
     }
 }
