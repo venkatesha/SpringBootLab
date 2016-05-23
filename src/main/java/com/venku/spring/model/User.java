@@ -1,8 +1,5 @@
 package com.venku.spring.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.venku.spring.exceptions.UnprocessableException;
 
 /**
@@ -28,6 +25,6 @@ public class User {
     }
 
     public void setUserId(String userId) {
-        throw new UnprocessableException("this field is not allowed to set");
+        throw new UnprocessableException("userId should not be part of request body[JSON]");
     }
 }
