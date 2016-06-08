@@ -2,10 +2,11 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'uptodate'
 
 buildscript {
     ext {
-        springBootVersion = '1.3.0.RELEASE'
+        springBootVersion = '1.3.5.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -14,6 +15,9 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+        // Use 'gradle uptodate' to find the updates on libraries
+        classpath("com.ofg:uptodate-gradle-plugin:0.0.1")
        
     }
 }
@@ -51,19 +55,19 @@ dependencies {
     compile('org.pegdown:pegdown:1.6.0')
 
     // Java Slang
-    compile "io.javaslang:javaslang:2.0.1"
+    compile "io.javaslang:javaslang:2.0.2"
 
     // Javaslang Circuitbreaker
     compile "io.github.robwin:javaslang-circuitbreaker:0.5.0"
 
     // for diff
-    testCompile('de.danielbechler:java-object-diff:0.93')
+    testCompile('de.danielbechler:java-object-diff:0.93.2')
     testCompile('org.assertj:assertj-core:3.4.1')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.hamcrest:hamcrest-core:1.3")
-    testCompile("com.jayway.restassured:rest-assured:2.7.0")
-    testRuntime("com.jayway.jsonpath:json-path:2.0.0") {
+    testCompile("com.jayway.restassured:rest-assured:2.9.0")
+    testRuntime("com.jayway.jsonpath:json-path:2.2.0") {
         exclude module: 'asm'
     }
     testRuntime("org.skyscreamer:jsonassert:1.3.0")

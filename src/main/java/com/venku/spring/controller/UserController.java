@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ import com.venku.spring.service.UserService;
  * Created by venkatesha.chandru on 5/23/2016.
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     @Autowired
@@ -48,6 +49,13 @@ public class UserController {
     public User get(@PathVariable("userId") String userId) {
 
         return new User();
+    }
+
+    @RequestMapping(value = "{userId}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") String userId) {
+
+        return ResponseEntity.ok("Deleted user " + userId);
+
     }
 
     public Response doStuff(String userName) {
@@ -109,7 +117,7 @@ public class UserController {
             return javaslang.API.Match(alternativeUser).of(
                     Case(Some($(isEqual(user))), doOperation.apply(user)),
                     Case($(), Response.status(FORBIDDEN).build())
-                    );
+            );
         };
 
         Option<User> user = userService.findUserByUsernameOption(userName);
@@ -117,7 +125,7 @@ public class UserController {
                 Case(Some($(User::hasSomeRole)), u -> doOperation.apply(u)),
                 Case(Some($()), u -> doOperationAsAlternativeUser.apply(u, "secretKey")),
                 Case($(), Response.status(FORBIDDEN).build())
-                );
+        );
     }
 
     public Response doStuffJava8(String userName) {
